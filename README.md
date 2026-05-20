@@ -21,21 +21,21 @@
 * This function gives us the output of `free -h`
 
 ### Add user
-* _work in progress_
+* __work in progress__
 * I want to add a gui for adding a user
 
 ### Integrity check
-* _work in progess_
+* __work in progess__
 
 ### Firewall
-* _work in progress_
+* __work in progress__
 
 ### Critical Service Check
-* _work in progress_
+* __work in progress__
 * Make a list of crucial services
 * Make a loop that `systemd` the list
 
 ### Error log
-* _work in progress_
+* __work in progress__
 * Runs the command `exec.Command("journalctl", "-p", "err", "-n", "10", "--no-pager")`
 
