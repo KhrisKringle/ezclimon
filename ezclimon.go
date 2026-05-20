@@ -16,11 +16,16 @@ func main() {
 		log.Fatal(fmt.Errorf("Not in maint directory: %s", dir))
 	}
 
-	fmt.Printf("Welcome %s, What would you like to do?\n", os.Getenv("USER"))
-	fmt.Println("1. Check Storage")
+	fmt.Printf("Welcome \033[1;36m%s\033[0m, What would you like to do?\n", os.Getenv("USER"))
+	/*fmt.Println("1. Check Storage")
 	fmt.Println("2. Network Info")
 	fmt.Println("3. System Info")
-	fmt.Println("4. Exit")
+	fmt.Println("4. Memory Info")
+	fmt.Println("5. Exit")
+	fmt.Print("What'll it be?: ")*/
+
+	q_prompt := "1. Check Storage\n2. Network Info\n3. System Info\n4. Memory Info\n5. Exit\n"
+	Boxed_Print(q_prompt)
 	fmt.Print("What'll it be?: ")
 
 	var choice int
@@ -34,6 +39,8 @@ func main() {
 	case 3:
 		System_Info()
 	case 4:
+		Memory_Info()
+	case 5:
 		fmt.Println("Goodbye!")
 	default:
 		fmt.Println("Invalid choice, please try again.")
@@ -66,6 +73,7 @@ func Storage_Check() {
 		log.Fatal("Could not run the Command for some reason: ", err)
 	}
 	Boxed_Print(string(cmd))
+	fmt.Println("\033[1;36m===Checking storage Complete===\033[0m")
 }
 
 func Network_Info() {
@@ -75,6 +83,7 @@ func Network_Info() {
 		log.Fatal("Could not run the Command for some reason: ", err)
 	}
 	Boxed_Print(string(cmd))
+	fmt.Println("\033[1;36m===Checking Network Info Complete===\033[0m")
 }
 
 func System_Info() {
@@ -84,4 +93,15 @@ func System_Info() {
 		log.Fatal("Could not run the Command for some reason: ", err)
 	}
 	Boxed_Print(string(cmd))
+	fmt.Println("\033[1;36m===Checking System Info Complete===\033[0m")
+}
+
+func Memory_Info() {
+	fmt.Println("\033[1;36m===Checking memory info...===\033[0m")
+	cmd, err := exec.Command("free", "-h").Output()
+	if err != nil {
+		log.Fatal("Could not run the Command for some reason: ", err)
+	}
+	Boxed_Print(string(cmd))
+	fmt.Println("\033[1;36m===Checking Memory Info Complete===\033[0m")
 }
