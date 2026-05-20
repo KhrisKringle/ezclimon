@@ -30,11 +30,9 @@ func main() {
 	case 1:
 		Storage_Check()
 	case 2:
-		// Network_Info()
-		fmt.Println("Work in progress, please try again.")
+		Network_Info()
 	case 3:
-		// System_Info()
-		fmt.Println("Work in progress, please try again.")
+		System_Info()
 	case 4:
 		fmt.Println("Goodbye!")
 	default:
@@ -64,6 +62,24 @@ func Boxed_Print(text string) {
 func Storage_Check() {
 	fmt.Println("\033[1;36m===Checking storage...===\033[0m")
 	cmd, err := exec.Command("df", "-h").Output()
+	if err != nil {
+		log.Fatal("Could not run the Command for some reason: ", err)
+	}
+	Boxed_Print(string(cmd))
+}
+
+func Network_Info() {
+	fmt.Println("\033[1;36m===Checking network info...===\033[0m")
+	cmd, err := exec.Command("ip", "a").Output()
+	if err != nil {
+		log.Fatal("Could not run the Command for some reason: ", err)
+	}
+	Boxed_Print(string(cmd))
+}
+
+func System_Info() {
+	fmt.Println("\033[1;36m===Checking system info...===\033[0m")
+	cmd, err := exec.Command("uname", "-a").Output()
 	if err != nil {
 		log.Fatal("Could not run the Command for some reason: ", err)
 	}
