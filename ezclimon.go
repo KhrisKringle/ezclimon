@@ -1,13 +1,13 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"os"
 	"os/exec"
-	"strings"
 	"strconv"
-	"bufio
+	"strings"
 )
 
 func main() {
@@ -19,28 +19,27 @@ func main() {
 	}
 
 	fmt.Printf("Welcome \033[1;36m%s\033[0m, What would you like to do?\n", os.Getenv("USER"))
-	
+
 	var choice int
 
 	for choice != 5 {
-	
-		Boxed_Print("1. Check Storage\n2. Network Info\n3. System Info\n4. Memory Info\n5. Exit\n")
-		fmt.Print("What'll it be?: ")
 
-	
+		Boxed_Print("1. Check Storage\n2. Network Info\n3. System Info\n4. Memory Info\n5. Exit\n")
+		fmt.Print("What ll it be?: ")
+
 		fmt.Scanln(&choice)
 
 		switch choice {
 		case 1:
 			err := Storage_Check()
 			if err != nil {
-				log.Fatalf(err)
+				log.Fatal(err)
 			}
 			var stor_choice string
 			fmt.Print("What else do you want to check for storage: ")
 			fmt.Scanln(&stor_choice)
 			if stor_choice == "Inode check" {
-				//Inode_Check()	
+				//Inode_Check()
 			}
 		case 2:
 			err := Network_Info()
@@ -89,10 +88,10 @@ func Network_Info() error {
 	fmt.Println("\033[1;36m===Checking network info...===\033[0m")
 	cmd, err := exec.Command("ip", "a").Output()
 	if err != nil {
-		return log.Fatal(err)
+		return err
 	}
 	Boxed_Print(string(cmd))
-	return fmt.Println("\033[1;36m===Checking Network Info Complete===\033[0m")
+	fmt.Println("\033[1;36m===Checking Network Info Complete===\033[0m")
 	return nil
 }
 
@@ -111,7 +110,7 @@ func Memory_Info() error {
 	fmt.Println("\033[1;36m===Checking memory info...===\033[0m")
 	cmd, err := exec.Command("free", "-h").Output()
 	if err != nil {
-		return log.Fatal(err)
+		return err
 	}
 	Boxed_Print(string(cmd))
 	fmt.Println("\033[1;36m===Checking Memory Info Complete===\033[0m")
@@ -123,7 +122,7 @@ func Memory_Integrity_Check() error {
 
 	file, err := os.Open("/proc/meminfo")
 	if err != nil {
-		return log.Fatal(err)
+		return err
 	}
 	defer file.Close()
 
@@ -134,7 +133,7 @@ func Memory_Integrity_Check() error {
 	for scanner.Scan() {
 		line := scanner.Text()
 		fields := strings.Fields(line)
-		
+
 		if len(fields) < 2 {
 			continue
 		}
